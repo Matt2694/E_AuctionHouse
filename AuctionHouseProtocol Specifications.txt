@@ -1,0 +1,24 @@
+AHP Specifications
+
+Client makes bid, server sends highest bid to clients:
+AHP/1.0 bid 1 10
+
+AHP/1.0 - The protocol version specification
+bid - the action
+1 - the id of the item
+10 - the price that was bid
+
+Gavel:
+AHP/1.0 gavel 2 5
+For gavel, the first number specifies gavels left before sold. 
+Second number is how many seconds untill next gravel.
+
+Client join server:
+AHP/1.0 join
+
+Info from server on client join:
+AHP/1.0 item itemID itemName startPrice currentPrice
+
+Client Wins bid:
+AHP/1.0 sold itemID clientName prices
+

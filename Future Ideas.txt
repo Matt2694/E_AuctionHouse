@@ -1,0 +1,3 @@
+Improve AHP specification to allow for spaces in item names
+
+Client chooses own nicknames
