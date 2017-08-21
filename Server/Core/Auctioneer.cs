@@ -11,7 +11,7 @@ namespace Core
 	public class Auctioneer
 	{
 		public static bool Active = true;
-		private List<Connection> Clients = new List<Connection>();
+		ClientRepository repoConn = ClientRepository.Instance;
 		public void AcceptClients()
 		{
 			IPAddress ip = IPAddress.Any;
@@ -21,12 +21,8 @@ namespace Core
 			while(Active)
 			{
 				TcpClient client = listener.AcceptTcpClient();
-				Connection newClient = new Connection(client);
-				Clients.Add(newClient);
-
-				Console.WriteLine("A new client has connected.");
-				string message = "Hi";
-				newClient.WriteBuffer.Enqueue(message);
+				repoConn.CreateClient(client);
+				Console.WriteLine("A Client has joined."); // TODO > Refactor into CLI.
 			}
 		}
 	}

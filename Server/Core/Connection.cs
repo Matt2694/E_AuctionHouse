@@ -15,8 +15,8 @@ namespace Core
 		private Thread Writter;
 		private Thread Reader;
 
-		public Queue<string> WriteBuffer = new Queue<string>();
-		public Queue<string> ReadBuffer = new Queue<string>();
+		private Queue<string> WriteBuffer = new Queue<string>();
+		private Queue<string> ReadBuffer = new Queue<string>();
 
 		//private object WriteBufferLock = new object();
 		//private object ReadBufferLock = new object();
@@ -31,6 +31,16 @@ namespace Core
 
 			Writter.Start();
 			Reader.Start();
+		}
+
+		public void messangeSend(string msg)
+		{
+			WriteBuffer.Enqueue(msg);
+		}
+
+		public string messageRead()
+		{
+			return ReadBuffer.Dequeue();
 		}
 
 		private void ConnWritter(StreamWriter sw)
