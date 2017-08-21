@@ -34,6 +34,7 @@ namespace Core
 			Connection newConnection = new Connection(conn);
 			Client newClient = new Client(this.NextID, newConnection);
 			this.AddClient(newClient);
+			newClient.SendMessage("Hi Client");
 		}
 
 		private void AddClient(Client client)

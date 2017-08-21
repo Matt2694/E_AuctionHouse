@@ -40,7 +40,9 @@ namespace Core
 
 		public string messageRead()
 		{
-			return ReadBuffer.Dequeue();
+			if (ReadBuffer.Count > 0)
+				return ReadBuffer.Dequeue();
+			else return null;
 		}
 
 		private void ConnWritter(StreamWriter sw)
