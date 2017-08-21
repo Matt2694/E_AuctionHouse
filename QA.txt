@@ -1,0 +1,14 @@
+Lowest price:
+ - Startping price
+
+Only one item:
+ - Start with one
+
+Maximum price:
+ - Nope
+
+Clients should send bid
+
+No need to bid on multiple items at a time
+
+Console app is fine 
