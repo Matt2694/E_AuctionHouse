@@ -15,14 +15,17 @@ namespace Core
 		private Thread Writter;
 		private Thread Reader;
 
-		private Queue<string> WriteBuffer = new Queue<string>();
-		private Queue<string> ReadBuffer = new Queue<string>();
+		// Buffers for messages to be sent & recived by the client
+		private Queue<string> WriteBuffer = new Queue<string>(); // These strings are sent to the client
+		private Queue<string> ReadBuffer = new Queue<string>(); // recived from the client
 
 		//private object WriteBufferLock = new object();
 		//private object ReadBufferLock = new object();
 
 		public Connection(TcpClient client)
 		{
+			// Put the stream reader and writer in the own threads
+			// They then pull and push messages into the queue buffers as nessesarry.
 			StreamWriter sw = new StreamWriter(client.GetStream());
 			StreamReader sr = new StreamReader(client.GetStream());
 
@@ -33,11 +36,20 @@ namespace Core
 			Reader.Start();
 		}
 
+		/// <summary>
+		/// Put a message into the writebuffer queue.
+		/// These are messages that will be sent to the client
+		/// </summary>
+		/// <param name="msg">Message to send to the client</param>
 		public void messangeSend(string msg)
 		{
 			WriteBuffer.Enqueue(msg);
 		}
-
+		/// <summary>
+		/// Returns oldest message from the read buffer.
+		/// These are messages recived from a client
+		/// </summary>
+		/// <returns>Oldest message recived from client. Null if no messages.</returns>
 		public string messageRead()
 		{
 			if (ReadBuffer.Count > 0)
@@ -45,6 +57,11 @@ namespace Core
 			else return null;
 		}
 
+		/// <summary>
+		/// Takes a message from the writebuffer queue, and actually sends it to the client.
+		/// Runs in its own thread.
+		/// </summary>
+		/// <param name="sw">The streamwriter that was created from the TCPclient in the constructor</param>
 		private void ConnWritter(StreamWriter sw)
 		{
 			while(Auctioneer.Active)
@@ -55,10 +72,15 @@ namespace Core
 					sw.WriteLine(message);
 					sw.Flush();
 				}
-				else Thread.Sleep(100);
+				else Thread.Sleep(100); // Should we reduce this?
 			}
 		}
 
+		/// <summary>
+		/// Recives messages from the client, and stores these in readbuffer.
+		/// Runs in its own thread.
+		/// </summary>
+		/// <param name="sr">The streamreader that was created from the TCPClient in the constructor</param>
 		private void ConnReader(StreamReader sr)
 		{
 			while(Auctioneer.Active)
