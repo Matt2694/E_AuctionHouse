@@ -10,6 +10,13 @@ namespace UI.CLI
 	{
 		static void Main(string[] args)
 		{
+			Program p = new Program();
+			p.Run();
+		}
+
+		private void Run()
+		{
+
 		}
 	}
 }
