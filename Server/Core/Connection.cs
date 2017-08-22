@@ -10,6 +10,9 @@ using System.IO;
 
 namespace Core
 {
+	/// <summary>
+	/// Handles sending and recieving TCP messages to/from a client.
+	/// </summary>
 	internal class Connection
 	{
 		private Thread Writter;
