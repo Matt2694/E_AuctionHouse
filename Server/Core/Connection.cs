@@ -75,7 +75,7 @@ namespace Core
 					sw.WriteLine(message);
 					sw.Flush();
 				}
-				else Thread.Sleep(100); // Should we reduce this?
+				else Thread.Sleep(100); // Should we reduce this? OR replace with wait handles, stackoverflow says thats better...
 			}
 		}
 
