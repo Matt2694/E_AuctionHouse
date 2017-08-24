@@ -12,6 +12,11 @@ namespace Core
 	{
 		public static bool Active = true;
 		ClientRepository repoConn = ClientRepository.Instance;
+
+		/// <summary>
+		/// Method that should be started to accept clients
+		/// To shut down, set the "Active" bool to false.
+		/// </summary>
 		public void AcceptClients()
 		{
 			IPAddress ip = IPAddress.Any;
