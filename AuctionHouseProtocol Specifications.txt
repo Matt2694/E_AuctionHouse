@@ -9,9 +9,8 @@ bid - the action
 10 - the price that was bid
 
 Gavel:
-AHP/1.0 gavel 2 5
+AHP/1.0 gavel 2
 For gavel, the first number specifies gavels left before sold. 
-Second number is how many seconds untill next gravel.
 
 Client join server:
 AHP/1.0 join
