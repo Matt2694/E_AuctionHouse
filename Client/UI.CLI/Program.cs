@@ -16,6 +16,8 @@ namespace UI.CLI
 			p.Run();
 		}
 
+        Server server;
+
 		private void Run()
 		{
 			Console.WriteLine("Input Auction Server IP (127.0.0.1):");
@@ -26,18 +28,43 @@ namespace UI.CLI
 				ip = "127.0.0.1";
 			}
 
-			Server server = new Server(ip);
+			server = new Server(ip);
 
-			string msg;
-			do
-			{
-				msg = server.ReadMessage();
-				Thread.Sleep(10);
-			} while (msg == null);
 
-			Console.WriteLine(msg);
+            Thread reader = new Thread(ReadMessages);
+            reader.Start();
+            Thread writer = new Thread(SendMessages);
+            writer.Start();
 
 			Console.ReadKey();
 		}
+
+        private void ReadMessages()
+        {
+            string msg;
+            while (Server.Active)
+            {
+                do
+                {
+                    msg = server.ReadMessage();
+                    Thread.Sleep(10);
+                } while (msg == null);
+
+                Console.WriteLine(AHPHandler.Message(msg));
+            }
+        }
+
+        private void SendMessages()
+        {
+            //TODO: only allow numbers
+            string price;
+            string msg;
+            while(Server.Active)
+            {
+                price = Console.ReadLine();
+                msg = AHPHandler.MakeBid(Item.ID, price);
+                server.SendMessage(msg);
+            }
+        }
 	}
 }

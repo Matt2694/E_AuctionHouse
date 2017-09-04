@@ -9,7 +9,7 @@ namespace Core
 	/// <summary>
 	/// Client: TCP link to the server from another process
 	/// </summary>
-	class Client
+	public class Client
 	{
 		public int ClientID { get; private set; }
 		public string ClientName { get
