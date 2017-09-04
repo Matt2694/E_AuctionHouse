@@ -20,12 +20,27 @@ namespace Core
                     case "item":
                         result = "Current item is: " + msgArray[3] + ". Current price: " + msgArray[5] + ". Starting price was: " + msgArray[4];
                         Item.ID = msgArray[2];
+                        Item.Name = msgArray[3];
                         break;
                     case "bid":
                         result = "Current prise: " + msgArray[3];
                         break;
-
-                    
+                    case "gavel":
+                        switch(msgArray[2]){
+                            case "2":
+                                result = "First";
+                                break;
+                            case "1":
+                                result = "Second";
+                                break;
+                            case "0":
+                                result = "Third";
+                                break;
+                        }
+                        break;
+                    case "sold":
+                        result = "Sold " + Item.Name + " to " + msgArray[3] + ", for " + msgArray[4];
+                        break;
                 }
             }
             return result;

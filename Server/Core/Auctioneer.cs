@@ -13,12 +13,16 @@ namespace Core
 	{
         public static Item item = new Item(1, "Chair", 100);
 		public static bool Active = true;
+        private static int gavelCount = 18;
+        public static EventWaitHandle waitForFirstBid = new AutoResetEvent(false);
 		ClientRepository repoClient = ClientRepository.Instance;
 
         public Auctioneer()
         {
             Thread incomming = new Thread(HandleBids);
             incomming.Start();
+            Thread gavelThread = new Thread(GavelHandler);
+            gavelThread.Start();
         }
 
 		/// <summary>
@@ -51,6 +55,35 @@ namespace Core
                     string msg = client.ReadMessage();
                     if(msg != null) AHPHandler.Message(msg, client);
                 }
+            }
+        }
+
+        public static void ResetGavel()
+        {
+            gavelCount = 18;
+        }
+
+        public void GavelHandler()
+        {
+            waitForFirstBid.WaitOne();
+            while (Active)
+            {
+                if (gavelCount == 8)
+                {
+                    AHPHandler.Gavel(2);
+                }
+                else if (gavelCount == 3)
+                {
+                    AHPHandler.Gavel(1);
+                }
+                else if (gavelCount == 0)
+                {
+                    AHPHandler.Gavel(0);
+                    AHPHandler.ItemSold(item);
+                }
+                gavelCount--;
+                Debug.Write("gavel count = " + gavelCount);
+                Thread.Sleep(1000);
             }
         }
 	}
