@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,8 @@ namespace Core
 		private Thread Reader;
 
 		// Buffers for messages to be sent & recived by the client
-		private Queue<string> WriteBuffer = new Queue<string>(); // These strings are sent to the client
-		private Queue<string> ReadBuffer = new Queue<string>(); // recived from the client
+		private ConcurrentQueue<string> WriteBuffer = new ConcurrentQueue<string>(); // These strings are sent to the client
+		private ConcurrentQueue<string> ReadBuffer = new ConcurrentQueue<string>(); // recived from the client
 
 		//private object WriteBufferLock = new object();
 		//private object ReadBufferLock = new object();
@@ -56,7 +57,10 @@ namespace Core
 		public string messageRead()
 		{
 			if (ReadBuffer.Count > 0)
-				return ReadBuffer.Dequeue();
+			{
+				ReadBuffer.TryDequeue(out string result);
+				return result;
+			}
 			else return null;
 		}
 
@@ -71,7 +75,7 @@ namespace Core
 			{
 				if (WriteBuffer.Count > 0)
 				{
-					string message = WriteBuffer.Dequeue();
+					WriteBuffer.TryDequeue(out string message);
 					sw.WriteLine(message);
 					sw.Flush();
 				}
