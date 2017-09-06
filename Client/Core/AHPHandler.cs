@@ -46,7 +46,7 @@ namespace Core
             return result;
         }
 
-        public static string MakeBid(string id, string price)
+        public static string MakeBid(string id, int price)
         {
             return "AHP/1.0 bid " + id + " " + price;
         }
