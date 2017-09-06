@@ -66,7 +66,7 @@ namespace Core
         public void GavelHandler()
         {
             waitForFirstBid.WaitOne();
-            while (Active)
+            while (Active && gavelCount > -1)
             {
                 if (gavelCount == 8)
                 {
@@ -81,8 +81,8 @@ namespace Core
                     AHPHandler.Gavel(0);
                     AHPHandler.ItemSold(item);
                 }
-                gavelCount--;
-                Debug.Write("gavel count = " + gavelCount);
+				Debug.Write("Gavel Count = " + gavelCount);
+				gavelCount--;
                 Thread.Sleep(1000);
             }
         }

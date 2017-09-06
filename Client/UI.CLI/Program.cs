@@ -31,8 +31,6 @@ namespace UI.CLI
 			reader.Start();
 			Thread writer = new Thread(SendMessages);
 			writer.Start();
-
-			Console.ReadKey();
 		}
 
 		private void ReadMessages()
