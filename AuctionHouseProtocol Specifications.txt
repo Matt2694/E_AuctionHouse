@@ -19,5 +19,9 @@ Info from server on client join:
 AHP/1.0 item itemID itemName startPrice currentPrice
 
 Client Wins bid:
-AHP/1.0 sold itemID clientName prices
+AHP/1.0 sold itemID clientName prices.
+
+Client Bids too low (server to client)
+AHP/1.0 bid 1 low
+
 
