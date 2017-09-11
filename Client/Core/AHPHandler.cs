@@ -23,7 +23,10 @@ namespace Core
                         Item.Name = msgArray[3];
                         break;
                     case "bid":
-                        result = "Current prise: " + msgArray[3];
+						if (msgArray[3] == "low")
+						{
+							result = "Your bid was lower than highest bid.";
+						} else result = "Current price: " + msgArray[3];
                         break;
                     case "gavel":
                         switch(msgArray[2]){

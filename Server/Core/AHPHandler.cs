@@ -22,7 +22,10 @@ namespace Core
                         if(BidHandler(msgArray, client))
                         {
                             ClientRepository.Instance.Broadcast(msg);
-                        }
+                        } else
+						{
+							client.SendMessage("AHP/1.0 bid "+ Auctioneer.item.ID +" low");
+						}
                         break;
 
 

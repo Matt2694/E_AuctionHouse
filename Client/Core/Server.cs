@@ -16,7 +16,7 @@ namespace Core
 		public Server(string ip)
 		{
 			TcpClient client = new TcpClient(ip, 5000);
-			Connection = new Connection(client);			
+			Connection = new Connection(client);
 		}
 
 		public string ReadMessage()
